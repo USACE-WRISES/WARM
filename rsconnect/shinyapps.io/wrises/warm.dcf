@@ -1,0 +1,11 @@
+name: warm
+title:
+username:
+account: wrises
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10523262
+bundleId: 7927125
+url: https://wrises.shinyapps.io/warm/
+when: 1699986221.15573
+lastSyncTime: 1699986221.15574

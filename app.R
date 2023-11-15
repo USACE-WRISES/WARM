@@ -129,12 +129,12 @@ ui <-dashboardPage(   #open user-interface
       
       tabItem(tabName="abt", # tab that links to documentation
               title = "About",
-              # fluidPage(
-              #   tags$iframe(src = './CRAN_ecorest.html',
-              #               width = '100%', height = '800px',
-              #               frameborder = 0, scrolling = 'auto'
-              #   )
-              # )
+              fluidPage(
+                tags$iframe(src = './about.html',
+                            width = '100%', height = '800px',
+                            frameborder = 0, scrolling = 'auto'
+                )
+              )
       ),
       
       # # #########################################################################################################################
