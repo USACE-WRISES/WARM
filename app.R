@@ -210,6 +210,32 @@ ui <-dashboardPage(   #open user-interface
               title="Bosque",
               solidHeader = T,
               status = "primary",
+              helpText("Assessments for Cover Types 1-5 (Forest and Shrubs) should include the following variables:"),
+              helpText("DEPTHGW: Depth to Groundwater (ft)"),
+              helpText("WETTEDAREA: Percent of Polygon that is Wet (%)"),
+              helpText("FLOODFREQ: Frequency of Flooding (#/yr)"),
+              helpText("DURATION: Average Duration of Flooding Events (days)"),
+              helpText("CANTREE: Canopy Cover of Overstory Trees (%)"),
+              helpText("CANSHRUB: Canopy Cover of Shrubs (%)"),
+              helpText("CANHERB: Canopy Cover of Herbaceous Vegetation (%)"),
+              helpText("DISTBIGTR: Distance to Biggest Tree from Sample Point (m)"),
+              helpText("NATIVETREE: Percent of Tall Overstory Tree Canopy that is a Native Species (%)"),
+              helpText("INDICATHB: Percent of Herbaceous Canopy that is an Undesirable Indicator Species (%)"),
+              helpText("SPPCOUNT: Number of Native Tree and Shrub Species (presence/absence)"),
+              helpText("COVGRND: Ground Cover Present (%)"),
+              helpText("CTGRNDCOV: Count of Ground Cover Categories Present"),
+              helpText("DEPTHOM: Depth of Organic Matter (cm)"),
+              helpText("Assessments for Cover Types 6 (Marsh and Wet Prairies) should include the DEPTHGW, WETTEDAREA, FLOODFREQ, DURATION from above as well as the following variables:"),
+              helpText("CANGRASS: Canopy Cover of Grass Species (%)"),
+              helpText("CANFORB: Canopy Cover of Forb Species (%)"),
+              helpText("CANSEDGE: Canopy Cover of Sedge Species (%)"),
+              helpText("INDICATGR: Percent of Grass Canopy that is an Undesirable Indicator Species (%)"),
+              helpText("INDICATFB: Percent of Forb Canopy that is an Undesirable Indicator Species (%)"),
+              helpText("NATIVESDG: Percent of Sedge Canopy that is a Desirable Indicator Species (%)"),
+              helpText("SPPCOUNT: Number of Native Tree and Shrub Species (presence/absence)"),
+              helpText("PATCHSIZE: Size of Patch (ac)"),
+              helpText("TYPDISTURB: Type of Human Disturbance (aka Adjacent Landuse Within 2 km)"),
+              helpText("DISPATCH: Distance to Nearest Patch (aka Nearest Neighbor of Forest or Meadow) (m)"),
               rHandsontableOutput("Bosque")
       ),
       
@@ -236,6 +262,19 @@ ui <-dashboardPage(   #open user-interface
               title="Cottonwood",
               solidHeader = T,
               status = "primary",
+              helpText("LCPI: Land Capability Potential Index"),
+              helpText("DEPTHGW: Depth to Groundwater (m)"),
+              helpText("RICHNATIVE: Native Species Richness (Count)"),
+              helpText("CVALUE: Mean Coefficient of Conservatism (Mean C)"),
+              helpText("WIS: Wetland Indicator Score"),
+              helpText("CANHERB: Herbaceous Canopy Cover (%)"),
+              helpText("CANSHRUB: Shrub Canopy Cover (%)"),
+              helpText("ADJLANDUSE: Adjacent Land Use (Natural, Pasture, Farmed, Urban)"),
+              helpText("PATCHSIZE: Patch Size (ac)"),
+              helpText("DISPATCH: Distance to Nearest Patch (m)"),
+              helpText("PROPCTW: Level of Cottonwood Domination (%)"),
+              helpText("RECRUIT: Level of Recruitment (%)"),
+              helpText("INTERSPERS: Relative Interspersion of Habitats"),
               rHandsontableOutput("Cottonwood")
       ),
       
@@ -250,13 +289,7 @@ ui <-dashboardPage(   #open user-interface
               solidHeader = T,
               status = "primary",
               rHandsontableOutput("LowerWill_input"),
-              helpText("Western Pond Turtle"),
-              helpText("Below are the attribute descriptions and HSI calculations for the Western Pond Turtle HEP model:"),
-              helpText("V1 = Percent area with water depth preferred by adults (0-100%)"),
-              helpText("V2 = Percent cover along water’s edge (0-100%)"),
-              helpText("V3 = Water temperature during low flows (5-30C) "),
-              helpText("V4 = Percent area with water depth less than 0.3 meters (0-100%)"),
-              helpText("V5 = Availability of suitable nesting sites (None-Abundant (qualitative))"),
+              uiOutput("LowerWill_text"),
               rHandsontableOutput("LowerWill")
       ),
       
@@ -267,25 +300,28 @@ ui <-dashboardPage(   #open user-interface
       #########################################################################################################################
       
       tabItem(tabName="Mink", #tab to look at the chosen model
-              # title="Skokomish",
-              # solidHeader = T,
-              # status = "primary",
-              # box(
               title="Modified Mink",
               solidHeader = T,
               status = "primary",
-              # checkboxGroupInput("grain_choice","Grain Roughness Calculators",c("Jarrett (1984)" = "Jarrett (1984)","Limerinos (1970)" = "Limerinos (1970)","Bathurst (1985)" = "Bathurst (1985)","Strickler (1923)" = "Strickler (1923)",
-              #                                                                   "Wong and Parker (2002)" = "Wong and Parker (2002)","Maynord (1991)" = "Maynord (1991)")),
-              # rHandsontableOutput("Cottonwood_input"),
-              rHandsontableOutput("Mink_input"),
-              rHandsontableOutput("Mink_output")
-              # )
-              # box(
-              #   fileInput("Resaca_inputs", "Upload user inputs in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-              #             multiple = FALSE,
-              #             accept =   ".csv"),
-              #   rHandsontableOutput("Resaca_multi")
-              # )
+              helpText("The variable numbers (V1, V5 and V6), related variable descriptions and discussions presented for water and cover are directly from the referenced mink model by Allen (1986).)"),
+              helpText("SIV1 = Percent (%) of year with surface water present"),
+              helpText("SIV5 = Percent (%) canopy cover of trees and shrubs within 100 m of the wetland's edge"),
+              helpText("SIV6 = Percent (%) shoreline cover"),
+              helpText("Vstream = Stream condition: Highly disturbed=.4, Moderately disturbed=.7, Natural Channel=1. Intermediate values may be entered"),
+              rHandsontableOutput("Mink_small"),
+              helpText("Mink HSI Model: (Allen, A.W. 1986. Habitat suitability index models: Mink, revised. U.S. Fish and Wildlife Service Biological Report 82(10.127). 23pp. [First printed as:FWS/OBS 82/10.61, October 1983.])"),
+              helpText("SIV1 = Percent (%) of year with surface water present"),
+              helpText("SIV2 = Percent (%) tree canopy cover"),
+              helpText("SIV3 = Percent (%) shrub canopy cover"),
+              helpText("SIV4 = Percent (%) canopy cover of emergent vegetation"),
+              helpText("SIV5 = Percent (%) canopy cover of trees and shrubs within 100 m of the wetland's edge"),
+              helpText("SIV6 = Percent (%) shoreline cover"),
+              helpText("SIFS1 = Cover index for mink in palustrine forested and scrub/shrub wetlands >=405 ha"),
+              helpText("SIFS2 = Cover index for forested and scrub/shrub wetlands <405 ha"),
+              helpText("SIRL = Cover index for riverine and lacustrine cover types"),
+              helpText("SIPE = Cover index for palustrine emergent wetlands"),
+              helpText("HSI = HSI is equal to the lowest value calculated for either life requisite (water and cover)"),
+              rHandsontableOutput("Mink_input")
       ),
       
       
@@ -297,49 +333,20 @@ ui <-dashboardPage(   #open user-interface
       #########################################################################################################################
       
       tabItem(tabName="UpperMiss", #tab to look at the chosen model
-              # box(
                 title="Upper Mississippi",
                 solidHeader = T,
                 status = "primary",
-                # checkboxGroupInput("grain_choice","Grain Roughness Calculators",c("Jarrett (1984)" = "Jarrett (1984)","Limerinos (1970)" = "Limerinos (1970)","Bathurst (1985)" = "Bathurst (1985)","Strickler (1923)" = "Strickler (1923)",
-                #                                                                   "Wong and Parker (2002)" = "Wong and Parker (2002)","Maynord (1991)" = "Maynord (1991)")),
-                rHandsontableOutput("UpperMiss_single")
-              # )
-              # box(
-              #   fileInput("UpperMiss_structural_inputs", "Upload user inputs for the structural diversity module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-              #             multiple = FALSE,
-              #             accept =   ".csv"),
-              #   fileInput("UpperMiss_HSI_inputs", "Upload user inputs for the UMRR forestry module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-              #             multiple = FALSE,
-              #             accept =   ".csv"),
-              #   rHandsontableOutput("UpperMiss_multi")
-              # )
-              # br(),br(),
-              # helpText("Brownlie (1981)"),
-              # rHandsontableOutput("brownlie_input"),
-              # br(),br(),
-              # helpText("Engelund (1967)"),
-              # rHandsontableOutput("engelund_input"),
-              # br(),br(),
-              # helpText("van Rijn (1984)"),
-              # rHandsontableOutput("vanrijn_input")
-              # uiOutput("grain")
-              # wellPanel(
-              #   rHandsontableOutput("autofill_inputs"),
-              #   submitButton("If autofill is desired, please place values in boxes above and press this button.  
-              #                 (Note: Autofill is not required and may be overidden manually.)")
-              # )
-              # radioButtons("direct_button", "If this calculation is desired to appear in the final output, please place values in boxes above and press this button.", 
-              #              c("Not Include", "Include"))
-              # ),
-              # box(
-              #   title="Results",
-              #   solidHeader = T,
-              #   status = "primary",
-              #   # rHandsontableOutput("brownlie"),
-              #   # rHandsontableOutput("engelund"),
-              #   # rHandsontableOutput("vanrijn")
-              # )
+              helpText("V1 = Percent Canopy Cover (%)"),
+              helpText("V2 = Percent Desired Forest Type (%)"),
+              helpText("V3 = Percent Invasive Species (%)"),
+              helpText("V4 = Regeneration (Percent of Desired Stocking) (%)"),
+              helpText("V5 = Structural Diversity (averaged 0-1 scores of five indicators)"),
+              helpText("       a.	Horizontal Structural Diversity"),
+              helpText("       b.	Vertical Structural Diversity"),
+              helpText("       c.	Size Class Diversity"),
+              helpText("       d.	Standing Dead Wood"),
+              helpText("       e.	Species Diversity"), 
+              rHandsontableOutput("UpperMiss_single")
       ),
       
       #########################################################################################################################
@@ -350,24 +357,11 @@ ui <-dashboardPage(   #open user-interface
       #########################################################################################################################
       
       tabItem(tabName="Resaca", #tab to look at the chosen model
-              # title="Resaca",
-              # solidHeader = T,
-              # status = "primary",
-              # box(
                 title="Resaca",
                 solidHeader = T,
                 status = "primary",
-                # checkboxGroupInput("grain_choice","Grain Roughness Calculators",c("Jarrett (1984)" = "Jarrett (1984)","Limerinos (1970)" = "Limerinos (1970)","Bathurst (1985)" = "Bathurst (1985)","Strickler (1923)" = "Strickler (1923)",
-                #                                                                   "Wong and Parker (2002)" = "Wong and Parker (2002)","Maynord (1991)" = "Maynord (1991)")),
                 rHandsontableOutput("Resaca_single_metric"),
                 rHandsontableOutput("Resaca_single_species")
-              # ),
-              # box(
-              #   fileInput("Resaca_inputs", "Upload user inputs in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-              #             multiple = FALSE,
-              #             accept =   ".csv"),
-              #   rHandsontableOutput("Resaca_multi")
-              # )
       ),
       
       #########################################################################################################################
@@ -379,6 +373,11 @@ ui <-dashboardPage(   #open user-interface
                 title="Skokomish",
                 solidHeader = T,
                 status = "primary",
+              helpText("V1 = Pool Habitat (count): Number of pools greater than 1‐meter depth, good cover, and cool water"),
+              helpText("V2 = Large Woody Debris (count): Pieces of LWD per meter of channel length"),
+              helpText("V3 = Riparian Cover (Low Impact, Moderate Impact, High Impact): Species composition, average stand diameter, density, width"),
+              helpText("V4 = Floodplain Connectivity/Access (%): Percentage of aquatic habitat remaining connected to the mainstem"),
+              helpText("V5 = Channel Capacity (frequency): Frequency of overbank flow at specific discharge return interval; fish survival"),
               rHandsontableOutput("Skokomish_input"),  
               rHandsontableOutput("Skokomish")
       ),
@@ -616,6 +615,50 @@ server <- function(input, output, session) { #this function constantly refreshes
     }
     values[["Chatfield"]] <- Chatfield
     
+    if(!is.null(input$Mink_small)){
+      Mink_small <- hot_to_r(input$Mink_small)
+      if(!is.na(Mink_small[1,1])){
+        if(Mink_small[1,1]<25){
+          Mink_small[1,2] <- 0
+        }
+        else if(Mink_small[1,1]<75){
+          Mink_small[1,2] <- 2*Mink_small[1,1]/100-0.5
+        }
+        else{
+          Mink_small[1,2] <- 1
+        }
+      }
+      if(!is.na(Mink_small[2,1])){
+        if(Mink_small[2,1]<75){
+          Mink_small[2,2] <- 1.2*Mink_small[2,1]/100+0.1
+        }
+        else{
+          Mink_small[2,2] <- 1
+        }
+      }
+      if(!is.na(Mink_small[3,1])){
+        if(Mink_small[3,1]<5.1){
+          Mink_small[3,2] <- 0.05
+        }
+        else if(Mink_small[3,1]<=100){
+          Mink_small[3,2] <- Mink_small[3,1]/100
+        }
+      }
+      if(!is.na(Mink_small[4,1])){
+        if(Mink_small[4,1]>=0.4 && Mink_small[4,1]<=1){
+          Mink_small[4,2] <- Mink_small[4,1]
+        }
+      }
+      if(!is.na(Mink_small[1,2]) && !is.na(Mink_small[2,2]) && !is.na(Mink_small[3,2]) && !is.na(Mink_small[4,2])){
+        Mink_small[5,2] <- (Mink_small[2,2]*Mink_small[3,2]*Mink_small[4,2])**(1/3)
+        Mink_small[6,2] <- Mink_small[1,2]
+        Mink_small[7,2] <- min(Mink_small[5:6,2])
+      }
+    }
+    else{
+      Mink_small <- data.frame(Data=rep(NA_real_,7),HSI=rep(NA_real_,7))
+    }
+    values[["Mink_small"]] <- Mink_small
     
     if(!is.null(input$Mink_input)){
       Mink_input <- hot_to_r(input$Mink_input)
@@ -1910,6 +1953,35 @@ server <- function(input, output, session) { #this function constantly refreshes
   
   
   #########################################################################################################################
+  # Function: Mink_small -renderRHandsontable-
+  # Output: prints inputs and outputs 
+  #########################################################################################################################
+  
+  output$Mink_small<- renderRHandsontable({
+    DF <- values[["Mink_small"]]
+    if (!is.null(DF)){
+      rhandsontable(DF, useTypes = TRUE,
+                    rowHeaders = c("SIV1","SIV5","SIV6","Vstream",
+                                   "HSI for Cover","HSI for Water","Overall HSI"),
+                    colHeaders = c("Data","HSI"),
+                    rowHeaderWidth = 250,
+                    stretchH = "all"
+                    # )
+      ) %>%
+        hot_col(col=2, readOnly = TRUE, copyable = TRUE) %>%
+        hot_col(col="Data", renderer = "
+    function(instance, td, row, col, prop, value, cellProperties){
+      Handsontable.renderers.TextRenderer.apply(this, arguments);
+      if(row==4 || row==5 || row==6){
+        td.style.background = 'grey'
+      }
+      return td;
+      }")
+    }
+  })
+  
+  
+  #########################################################################################################################
   # Function: Mink_input -renderRHandsontable-
   # Output: prints inputs and outputs 
   #########################################################################################################################
@@ -2165,6 +2237,79 @@ server <- function(input, output, session) { #this function constantly refreshes
     }
   })
       
+  
+  output$LowerWill_text <- renderUI({
+    LowerWill_input <- values[["LowerWill_input"]]
+    if(is.na(LowerWill_input[1,1])){
+      tagList(
+        helpText("Input values in the table above")
+      )
+    }
+    else if(LowerWill_input[1,1]=="Western Pond Turtle"){
+      tagList(
+        helpText("Western Pond Turtle"),
+        helpText("V1 = Percent area with water depth preferred by adults (0-100%)"),
+        helpText("V2 = Percent cover along water’s edge (0-100%)"),
+        helpText("V3 = Water temperature during low flows (5-30C)"),
+        helpText("V4 = Percent area with water depth less than 0.3 meters (0-100%)"),
+        helpText("V5 = Availability of suitable nesting sites (None-Abundant (qualitative))")
+      )
+    }
+    else if(LowerWill_input[1,1]=="Beaver"){
+      tagList(
+        helpText("Beaver"),
+        helpText("V1 = Percent tree canopy closure (0-100%)"),
+        helpText("V2 = Percent of trees in 2.5 to 15.2 cm dbh size class (0-100%)"),
+        helpText("V3 = Percent shrub crown cover (0-100%)"),
+        helpText("V4 = Average height of shrub canopy (0-4m)"),
+        helpText("V5 = Species composition of woody vegetation (Class A-C)")
+      )
+    }
+    else if(LowerWill_input[1,1]=="Wood Duck"){
+      tagList(
+        helpText("Wood Duck"),
+        helpText("V1 = Percent of the water surface covered by potential brood cover (0-100%)")
+      )
+    }
+    else if(LowerWill_input[1,1]=="Yellow Warbler"){
+      tagList(
+        helpText("Yellow Warbler"),
+        helpText("V1 = Percent deciduous shrub crown cover (0-100%)"),
+        helpText("V2 = Percent overall canopy cover (0-100%)"),
+        helpText("V3 = Average height of deciduous shrub canopy (0-2+m)"),
+        helpText("V4 = Percent of shrub canopy comprised of hydrophytic shrubs (0-100%)")
+      )
+    }
+    else if(LowerWill_input[1,1]=="Native Amphibians"){
+      tagList(
+        helpText("Native Amphibians"),
+        helpText("V1 = Percent area with permanent water (0-100%)"),
+        helpText("V2 = Percent area with emergent or submergent wetland/aquatic vegetation (0-100%)"),
+        helpText("V3 = Percent ground cover along the water’s edge (0-100%)"),
+        helpText("V4 = Width of riparian zone (0-60+m)"),
+        helpText("V5 = Maximum temperature during low flows (0-20C)"),
+        helpText("V6 = Land use within 200 meters of the wetland edge (Developed-undeveloped)")
+      )
+    }
+    else if(LowerWill_input[1,1]=="Salmonids Tributary - Prespawning Adults" || LowerWill_input[1,1]=="Salmonids Tributary - Juvenile"){
+      tagList(
+        helpText("Salmonids Tributary"),
+        helpText("V1 = Maximum water temperature during low flows (0-25C)"),
+        helpText("V2 = Percent pools during low water period (0-100%)"),
+        helpText("V3 = Instream cover (LWD) present (0-40%)"),
+        helpText("V4 = Predominant substrate size in riffle and run areas (Class A–C)")
+      )
+    }
+    else if(LowerWill_input[1,1]=="Native Salmonids Mainstem"){
+      tagList(
+        helpText("Native Salmonids Mainstem"),
+        helpText("V1 = Depth (<20m from shore) (0-10+m)"),
+        helpText("V2 = Substrate (Bedrock-Fine)"),
+        helpText("V3 = Percent cover bank vegetation (0-100%)")
+      )
+    }
+  })
+  
       #########################################################################################################################
       # Function: LowerWill_input -renderRHandsontable-
       # Output: prints inputs and outputs 
@@ -2183,8 +2328,8 @@ server <- function(input, output, session) { #this function constantly refreshes
           hot_col(col="Variable Selection", allowInvalid = FALSE, type = "dropdown",
                   source = c(NA_character_,"Western Pond Turtle","Beaver",
                              "Wood Duck","Yellow Warbler","Native Amphibians",
-                             "Salmonids Trbutary - Prespawning Adults",
-                             "Salmonids Trbutary - Juvenile",
+                             "Salmonids Tributary - Prespawning Adults",
+                             "Salmonids Tributary - Juvenile",
                              "Native Salmonids Mainstem"), readOnly = FALSE)
     }
   })
