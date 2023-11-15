@@ -5,16 +5,6 @@ date: ""
 output: html_document
 ---
 
-```{r setup, include=FALSE, out.width="20%", out.height="20%"}
-knitr::opts_chunk$set(echo = TRUE,
-                      collapse = TRUE,
-                      message = FALSE,
-                      warning = FALSE,
-                      error = FALSE
-)
-```
-
-
 # Web App for Riparian Models
 
 <img src="SmallStream2WestPoint.jpg" align="right" width=200/>
