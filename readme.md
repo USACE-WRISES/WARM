@@ -18,7 +18,5 @@ Version Date: 3/6/2023
 <br />
 Licensing: GPL-3
 <br />
-Waiver: This model is provided for free as part of the USACE Technical Note "Robust Prediction of Hydraulic Roughness" by S. Kyle McKay and J. Craig Fischenich.
-<br />
 Neither the authors nor the US Army Corps of Engineers accepts responsibility or liability for the model's use by third parties.
 
