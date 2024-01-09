@@ -7,7 +7,7 @@ The **Web App for Riparian Models**, or **WARM**, is a graphical user-interface 
 More information on the "Review of Riparian Models for Assessing Ecological Impacts and Benefits" can be found on the RiparianModelReviewSubmitted.docx. Information pertaining to the WRISES team and their ongoing work can be found on https://github.com/USACE-WRISES.
 
 <br /><br />
-Contributors: Colton Shaw (Colton.K.Shaw@erdc.dren.mil), Samantha Weist, Kyle McKay (Kyle.McKay@usace.army.mil)
+Contributors: Colton Shaw (cshaw@threesaintsbay.com), Samantha Weist (samantha.r.wiest@usace.army.mil), Kyle McKay (Kyle.McKay@usace.army.mil)
 
 <br />
 Release Date: 3/6/2023
