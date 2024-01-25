@@ -379,7 +379,7 @@ ui <-dashboardPage(   #open user-interface
               helpText("V4 = Floodplain Connectivity/Access (%): Percentage of aquatic habitat remaining connected to the mainstem"),
               helpText("V5 = Channel Capacity (frequency): Frequency of overbank flow at specific discharge return interval; fish survival"),
               rHandsontableOutput("Skokomish_input"),  
-              rHandsontableOutput("Skokomish")
+              rHandsontableOutput("Skokomish"),
       ),
       
       #########################################################################################################################
@@ -390,92 +390,114 @@ ui <-dashboardPage(   #open user-interface
       #########################################################################################################################
       
       tabItem(tabName="SMURF", #tab to look at the chosen model
-              title="SMURF",
+              title="Simple Model for Urban Riparian Function (SMURF)",
               solidHeader = T,
               status = "primary",
-              h1("Simple Model for Urban Riparian Function (SMURF)",align='center',style="background-color:DarkSeaGreen",color="black"), 
-              style="background-color:LightGrey",
+              rHandsontableOutput("smurf_input"),
+              # h1("Simple Model for Urban Riparian Function (SMURF)",align='center',style="background-color:DarkSeaGreen",color="black"), 
+              # style="background-color:LightGrey",
               #########################################################################################################################
               # Contains elements of the left-hand side of the page
               # HTMl elements for user inputs
               #########################################################################################################################
-              fluidRow(
-                column(12,
-                       column(3,
-                              align='center',
-                              uiOutput(outputId="FileText1"),
-                              fileInput("instream_inputs", "Upload user inputs for the instream module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-                                        multiple = FALSE,
-                                        accept =   ".csv"),
-                              fileInput("fauna_inputs", "Upload user inputs for the  fauna module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-                                        multiple = FALSE,
-                                        accept =   ".csv"),
-                              fileInput("corridor_inputs", "Upload user inputs for the corridor module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-                                        multiple = FALSE,
-                                        accept =   ".csv"),
-                              fileInput("area_inputs", "Upload user inputs for area in ecorest format (.csv)", #user uploads csv file and is put into input$file1
-                                        multiple = FALSE,
-                                        accept =   ".csv")
-                       ),
+              # fluidRow(
+                # column(12,
+                       # column(3,
+                       #        align='center',
+                       #        uiOutput(outputId="FileText1"),
+                       #        fileInput("instream_inputs", "Upload user inputs for the instream module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+                       #                  multiple = FALSE,
+                       #                  accept =   ".csv"),
+                       #        fileInput("fauna_inputs", "Upload user inputs for the  fauna module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+                       #                  multiple = FALSE,
+                       #                  accept =   ".csv"),
+                       #        fileInput("corridor_inputs", "Upload user inputs for the corridor module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+                       #                  multiple = FALSE,
+                       #                  accept =   ".csv"),
+                       #        fileInput("area_inputs", "Upload user inputs for area in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+                       #                  multiple = FALSE,
+                       #                  accept =   ".csv")
+                       # ),
                        
-                       column(3,
-                              align='center',
-                              uiOutput(outputId="InstreamText1"),  
-                              numericInput("hyd.att",label="Hydrologic Attentuation (0-10):",NA,min=0,max=10),
-                              numericInput("stripwidth.ft",label="Mean Buffer Width (0-1000):",NA,min=0,max=1000),
-                              numericInput("flowpath.score",label="Flowpath Metric (0-20):",NA,min=0,max=20),
-                              numericInput("shading.ratio",label="shading.ratio:",NA),
-                              numericInput("cancov.score",label="Stream Canopy Cover (0-20):",NA,min=0,max=20),
-                              numericInput("canstr.score",label="Multi-story Canopy Structure (0-20):",NA,min=0,max=20),
-                              numericInput("carbret.score",label="Organic Matter Retention: (0-20)",NA,min=0,max=20),
-                       ),
+                       # column(3,
+                              # align='center',
+                              # uiOutput(outputId="InstreamText1"),  
+                              # numericInput("hyd.att",label="Hydrologic Attentuation (0-10):",NA,min=0,max=10),
+                              # numericInput("stripwidth.ft",label="Mean Buffer Width (0-1000):",NA,min=0,max=1000),
+                              # numericInput("flowpath.score",label="Flowpath Metric (0-20):",NA,min=0,max=20),
+                              # numericInput("shading.ratio",label="shading.ratio:",NA),
+                              # numericInput("cancov.score",label="Stream Canopy Cover (0-20):",NA,min=0,max=20),
+                              # numericInput("canstr.score",label="Multi-story Canopy Structure (0-20):",NA,min=0,max=20),
+                              # numericInput("carbret.score",label="Organic Matter Retention: (0-20)",NA,min=0,max=20)
+                       # ),
                        
-                       column(3, 
-                              align='center',
-                              uiOutput(outputId="FaunaText1"),
-                              numericInput("canstr.score.fauna",label="Multi-story Canopy Structure (0-20):",NA,min=0,max=20),
-                              numericInput("deadfall.score",label="Deadfall Density (0-20):",NA,min=0,max=20),
-                              numericInput("snag.score",label="Snag Density (0-20):",NA,min=0,max=20),
-                              numericInput("batcan.score",label="batcan.score (0-20):",NA,min=0,max=20),
-                              numericInput("embed.score",label="Embeddedness (0-20):",NA,min=0,max=20),
-                              numericInput("detritus.score",label="Detrital Ground Cover (0-20):",NA,min=0,max=20),
-                              numericInput("herb.score",label="Herbaceous Vegetation Cover (0-20):",NA,min=0,max=20),
-                              numericInput("inv.veg.score",label="Invasive vegetation Dominance (0-20):",NA,min=0,max=20),
-                       ),
+                       # column(3, 
+                              # align='center',
+                              # uiOutput(outputId="FaunaText1"),
+                              # numericInput("canstr.score.fauna",label="Multi-story Canopy Structure (0-20):",NA,min=0,max=20),
+                              # numericInput("deadfall.score",label="Deadfall Density (0-20):",NA,min=0,max=20),
+                              # numericInput("snag.score",label="Snag Density (0-20):",NA,min=0,max=20),
+                              # numericInput("batcan.score",label="batcan.score (0-20):",NA,min=0,max=20),
+                              # numericInput("embed.score",label="Embeddedness (0-20):",NA,min=0,max=20),
+                              # numericInput("detritus.score",label="Detrital Ground Cover (0-20):",NA,min=0,max=20),
+                              # numericInput("herb.score",label="Herbaceous Vegetation Cover (0-20):",NA,min=0,max=20),
+                              # numericInput("inv.veg.score",label="Invasive vegetation Dominance (0-20):",NA,min=0,max=20)
+                       # ),
                        
-                       column(3, 
-                              align='center',
-                              uiOutput(outputId="CorridorText1"),
-                              numericInput("buffer.dev.Score",label="Buffer Development (0-20):",NA,min=0,max=20),
-                              numericInput("edge.density.perft",label="Edge Density (ft/ft^2):",NA),
-                              numericInput("corridorwidth.ft",label="Corridor width (ft):",NA),
-                              numericInput("corridormin.ft",label="Corridor Minimum Width (ft):",NA),
-                              
-                              uiOutput(outputId="AreaText1"),
-                              numericInput("area.input",label="Site Area:",NA),
-                       ),
-                ),
-              ),
-              
-                
-                #########################################################################################################################
-                # Contains elements of the right-hand side of the page
-                # HTMl elements for user inputs
-                #########################################################################################################################
-                fluidRow(
-                  column(6,
-                         style="background-color:GoldenRod",
-                         align='center',
-                         uiOutput(outputId="OutputsText2"),
-                         dataTableOutput("SMURF_multi")
-                  ),
-                  column(6,
-                         style="background-color:GoldenRod",
-                         align='center',
-                         uiOutput(outputId="OutputsText1"),
-                         dataTableOutput("SMURF_single")
-                  )
-                )
+                       # column(3, 
+                              # align='center',
+                              # uiOutput(outputId="CorridorText1"),
+                              # numericInput("buffer.dev.Score",label="Buffer Development (0-20):",NA,min=0,max=20),
+                              # numericInput("edge.density.perft",label="Edge Density (ft/ft^2):",NA),
+                              # numericInput("corridorwidth.ft",label="Corridor width (ft):",NA),
+                              # numericInput("corridormin.ft",label="Corridor Minimum Width (ft):",NA),
+                              # 
+                              # uiOutput(outputId="AreaText1"),
+                              # numericInput("area.input",label="Site Area:",NA)
+                       # ),
+                       # column(12, 
+                       #        align='center',
+                              # rHandsontableOutput("smurf_input")
+                       # )
+                # ),
+    #           ),
+    #           
+    #             
+    #             #########################################################################################################################
+    #             # Contains elements of the right-hand side of the page
+    #             # HTMl elements for user inputs
+    #             #########################################################################################################################
+    #             fluidRow(
+    #               column(3,
+    #                      align='center',
+    #                      uiOutput(outputId="FileText1"),
+    #                      fileInput("instream_inputs", "Upload user inputs for the instream module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+    #                                multiple = FALSE,
+    #                                accept =   ".csv"),
+    #                      fileInput("fauna_inputs", "Upload user inputs for the  fauna module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+    #                                multiple = FALSE,
+    #                                accept =   ".csv"),
+    #                      fileInput("corridor_inputs", "Upload user inputs for the corridor module in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+    #                                multiple = FALSE,
+    #                                accept =   ".csv"),
+    #                      fileInput("area_inputs", "Upload user inputs for area in ecorest format (.csv)", #user uploads csv file and is put into input$file1
+    #                                multiple = FALSE,
+    #                                accept =   ".csv")
+    #               ),
+    #               column(6,
+    #                      # style="background-color:GoldenRod",
+    #                      align='center',
+    #                      uiOutput(outputId="OutputsText2"),
+    #                      dataTableOutput("SMURF_multi")
+    #               )
+    #               # column(6,
+    #               #        # style="background-color:GoldenRod",
+    #               #        align='center',
+    #               #        uiOutput(outputId="OutputsText1"),
+    #               #        # dataTableOutput("SMURF_single")
+    #               #        dataTableOutput("SMURF")
+    #               # )
+    #             )
       )
     )
   )
@@ -1746,6 +1768,95 @@ server <- function(input, output, session) { #this function constantly refreshes
       }
     }
     values[["criteria_models"]] <- criteria_models
+    
+    if(!is.null(input$smurf_input)){
+      smurf_input<- hot_to_r(input$smurf_input)
+      if(!is.na(smurf_input[1,1]) && !is.na(smurf_input[2,1]) && !is.na(smurf_input[3,1])
+         && !is.na(smurf_input[4,1]) && !is.na(smurf_input[5,1]) && !is.na(smurf_input[6,1])
+         && !is.na(smurf_input[7,1]) && !is.na(smurf_input[8,1]) && !is.na(smurf_input[9,1])
+         && !is.na(smurf_input[10,1]) && !is.na(smurf_input[11,1]) && !is.na(smurf_input[12,1])
+         && !is.na(smurf_input[13,1]) && !is.na(smurf_input[14,1]) && !is.na(smurf_input[15,1])
+         && !is.na(smurf_input[16,1]) && !is.na(smurf_input[17,1]) && !is.na(smurf_input[18,1])
+         && !is.na(smurf_input[19,1]) && !is.na(smurf_input[20,1])){
+        load('SMURF_instream.rda')
+        load('SMURF_fauna.rda')
+        load('SMURF_corridor.rda')
+        # SMURF_instream <- load_smurf_instream()
+        # SMURF_fauna <- load_smurf_fauna()
+        # SMURF_corridor <- load_smurf_corridor()
+        instream.names <- c("hyd.att", "stripwidth.ft", "flowpath.score", "shading.ratio",
+                            "cancov.score", "canstr.score", "carbret.score")
+
+        fauna.names <- c("canstr.score", "deadfall.score", "snag.score", "batcan.score",
+                         "embed.score", "detritus.score", "herb.score", "inv.veg.score")
+
+        corridor.names <- c("buffer.dev.Score", "edge.density.perft", "corridorwidth.ft", "corridormin.ft")
+
+        #Create empty matrices to store suitability outputs
+        SI.instream <- c(); SI.fauna <- c(); SI.corridor <- c()
+
+        #Fill site inputs with the user inputs
+        #site.instream: hyd.att, stripwidth.ft, flowpath.score, shading.ratio, cancov.score, canstr.score, and carbret.score (7 total)
+        # site.instream <- c(input$hyd.att,input$stripwidth.ft,input$flowpath.score,input$shading.ratio,input$cancov.score,input$canstr.score,input$carbret.score)
+        site.instream <- c(smurf_input[2:8,1])
+        #site.fauna: canstr.score, deadfall.score, snag.score, batcan.score, embed.score, detritus.score, herb.score, and inv.veg.score (8 total)
+        # site.fauna <- c(input$canstr.score.fauna, input$deadfall.score, input$snag.score, input$batcan.score, input$embed.score, input$detritus.score, input$herb.score, input$inv.veg.score)
+        site.fauna <- c(smurf_input[9:16,1])
+        #site.corridor: buffer.dev.Score, edge.density.perft, corridorwidth.ft, and corridormin.ft (4 total)
+        # site.corridor<- c(input$buffer.dev.Score, input$edge.density.perft, input$corridorwidth.ft, input$corridormin.ft)
+        site.corridor<- c(smurf_input[17:20,1])
+        #site.area: area.input (1 total)
+        # site.area <- c(input$area.input)
+        site.area <- c(smurf_input[1,1])
+        
+        #Calculate suitability indices for each input variable and module using SIcalc( ) from the ecorest package
+        SI.instream <- SIcalc(data.frame(lapply(SMURF_instream,as.numeric)), site.instream)
+        SI.fauna <- SIcalc(data.frame(lapply(SMURF_fauna,as.numeric)), site.fauna)
+        SI.corridor <- SIcalc(data.frame(lapply(SMURF_corridor,as.numeric)), site.corridor)
+
+        #Create empty data frame to store outputs (Instream SI, Habitat SI, Corridor SI, HSI, Area, Habitat Units)
+        SMURF.out <- as.data.frame(matrix(NA, nrow = 1, ncol = 6))
+        colnames(SMURF.out) <- c("Instream.SI", "Fauna.SI", "Corridor.SI", "HSI", "Area", "HU")
+        #If any input is NA, return NA
+        if (sum(is.na(c(site.instream,site.fauna,site.corridor))) > 0){
+          SMURF.out$Instream.SI <- NA
+          SMURF.out$Fauna.SI <- NA
+          SMURF.out$Corridor.SI <- NA
+          SMURF.out$HSI <- NA
+          SMURF.out$Area <- NA
+          SMURF.out$HU <- NA
+        }
+
+        #Else compute all other outputs
+        else{
+          #Compute module-specific habitat suitability indices using HSIarimean( ) from the ecorest package - ARITHMETIC MEAN
+          SMURF.out$Instream.SI <- round(HSIarimean(SI.instream), digits=3)
+          SMURF.out$Fauna.SI <- round(HSIarimean(SI.fauna), digits=3)
+          SMURF.out$Corridor.SI <- round(HSIarimean(SI.corridor), digits=3)
+
+          #Compute overarching habitat suitability index and habitat units
+          SMURF.out$HSI <- round((SMURF.out$Instream.SI * SMURF.out$Fauna.SI * SMURF.out$Corridor.SI) ^ (1/3), digits=3)
+          SMURF.out$Area <- round(site.area, digits=3)
+          SMURF.out$HU <- round(SMURF.out$HSI * SMURF.out$Area, digits=3)
+          #colnames(SMURF.out) <- c("Instream Suitability", "Fauna Suitability", "Corridor Suitability", "Overall Suitability", "Area", "Habitat Units")
+          #Send output from function
+          # smurf_input[21,1] <- SMURF.out$HU
+          smurf_input[21,1] <- round(SMURF.out$HSI * SMURF.out$Area, digits=3)
+        }
+        # #Send output from function
+        # # smurf_input[21,1] <- SMURF.out$HU
+        # smurf_input[21,1] <- round(SMURF.out$HSI * SMURF.out$Area, digits=3)
+      }
+      # else{
+      # }
+    }
+    else{
+      smurf_input <- data.frame(Values=rep(NA_real_,21))
+      # load('SMURF_instream.rda')
+      # load('SMURF_fauna.rda')
+      # load('SMURF_corridor.rda')
+    }
+    values[["smurf_input"]] <- smurf_input
 
     if(!is.null(input$UpperMiss_single)){
       single_input <- hot_to_r(input$UpperMiss_single)
@@ -2458,75 +2569,171 @@ server <- function(input, output, session) { #this function constantly refreshes
     )
   })
   
-  SMURF_single <- reactive({
-    load('SMURF_instream.rda')
-    load('SMURF_fauna.rda')
-    load('SMURF_corridor.rda')
-    instream.names <- c("hyd.att", "stripwidth.ft", "flowpath.score", "shading.ratio", 
-                        "cancov.score", "canstr.score", "carbret.score")
-    
-    fauna.names <- c("canstr.score", "deadfall.score", "snag.score", "batcan.score",
-                     "embed.score", "detritus.score", "herb.score", "inv.veg.score")
-    
-    corridor.names <- c("buffer.dev.Score", "edge.density.perft", "corridorwidth.ft", "corridormin.ft")
-    
-    #Create empty matrices to store suitability outputs
-    SI.instream <- c(); SI.fauna <- c(); SI.corridor <- c()
-    
-    #Fill site inputs with the user inputs
-    #site.instream: hyd.att, stripwidth.ft, flowpath.score, shading.ratio, cancov.score, canstr.score, and carbret.score (7 total)
-    site.instream <- c(input$hyd.att,input$stripwidth.ft,input$flowpath.score,input$shading.ratio,input$cancov.score,input$canstr.score,input$carbret.score)
-    #site.fauna: canstr.score, deadfall.score, snag.score, batcan.score, embed.score, detritus.score, herb.score, and inv.veg.score (8 total)
-    site.fauna <- c(input$canstr.score.fauna, input$deadfall.score, input$snag.score, input$batcan.score, input$embed.score, input$detritus.score, input$herb.score, input$inv.veg.score)
-    #site.corridor: buffer.dev.Score, edge.density.perft, corridorwidth.ft, and corridormin.ft (4 total)
-    site.corridor<- c(input$buffer.dev.Score, input$edge.density.perft, input$corridorwidth.ft, input$corridormin.ft)
-    #site.area: area.input (1 total)
-    site.area <- c(input$area.input)
-    
-    #Calculate suitability indices for each input variable and module using SIcalc( ) from the ecorest package
-    SI.instream <- SIcalc(data.frame(lapply(SMURF_instream,as.numeric)), site.instream)
-    SI.fauna <- SIcalc(data.frame(lapply(SMURF_fauna,as.numeric)), site.fauna)
-    SI.corridor <- SIcalc(data.frame(lapply(SMURF_corridor,as.numeric)), site.corridor)
-    
-    #Create empty data frame to store outputs (Instream SI, Habitat SI, Corridor SI, HSI, Area, Habitat Units)
-    SMURF.out <- as.data.frame(matrix(NA, nrow = 1, ncol = 6))
-    colnames(SMURF.out) <- c("Instream.SI", "Fauna.SI", "Corridor.SI", "HSI", "Area", "HU")
-    #If any input is NA, return NA
-    if (sum(is.na(c(site.instream,site.fauna,site.corridor))) > 0){
-      SMURF.out$Instream.SI <- NA
-      SMURF.out$Fauna.SI <- NA
-      SMURF.out$Corridor.SI <- NA
-      SMURF.out$HSI <- NA
-      SMURF.out$Area <- NA
-      SMURF.out$HU <- NA
+  output$smurf_input <- renderRHandsontable({
+    DF <- values[["smurf_input"]]
+    if (!is.null(DF)){
+      rhandsontable(DF, useTypes = TRUE,
+                    rowHeaders = c("area","hyd.att", "stripwidth.ft", "flowpath.score",
+                                   "shading.ratio", "cancov.score", "canstr.score",
+                                   "carbret.score","canstr.score", "deadfall.score",
+                                   "snag.score", "batcan.score", "embed.score",
+                                   "detritus.score", "herb.score", "inv.veg.score",
+                                   "buffer.dev.Score", "edge.density.perft", "corridorwidth.ft",
+                                   "corridormin.ft","HU"),
+                    colHeaders = NULL,
+                    rowHeaderWidth = 250,
+                    # height = 200,
+                    stretchH = "all"
+      )
     }
-    
-    #Else compute all other outputs
-    else{
-      #Compute module-specific habitat suitability indices using HSIarimean( ) from the ecorest package - ARITHMETIC MEAN
-      SMURF.out$Instream.SI <- round(HSIarimean(SI.instream), digits=3)
-      SMURF.out$Fauna.SI <- round(HSIarimean(SI.fauna), digits=3)
-      SMURF.out$Corridor.SI <- round(HSIarimean(SI.corridor), digits=3)
-      
-      #Compute overarching habitat suitability index and habitat units
-      SMURF.out$HSI <- round((SMURF.out$Instream.SI * SMURF.out$Fauna.SI * SMURF.out$Corridor.SI) ^ (1/3), digits=3)
-      SMURF.out$Area <- round(site.area, digits=3)
-      SMURF.out$HU <- round(SMURF.out$HSI * SMURF.out$Area, digits=3)
-      colnames(SMURF.out) <- c("Instream Suitability", "Fauna Suitability", "Corridor Suitability", "Overall Suitability", "Area", "Habitat Units")
-    }
-    #Send output from function
-    return(SMURF.out)
   })
   
-  output$SMURF_single<-renderDataTable({
-    datatable(
-      t(SMURF_single()),
-      colnames=NULL,
-      options=list(paging=FALSE,
-                   searching=FALSE,
-                   paging=FALSE)
-    )
-  })
+  
+  
+  # SMURF <- reactive({
+  #   load('SMURF_instream.rda')
+  #   load('SMURF_fauna.rda')
+  #   load('SMURF_corridor.rda')
+  #   smurf_input <- values[["smurf_input"]]
+  #   instream.names <- c("hyd.att", "stripwidth.ft", "flowpath.score", "shading.ratio", 
+  #                       "cancov.score", "canstr.score", "carbret.score")
+  #   
+  #   fauna.names <- c("canstr.score", "deadfall.score", "snag.score", "batcan.score",
+  #                    "embed.score", "detritus.score", "herb.score", "inv.veg.score")
+  #   
+  #   corridor.names <- c("buffer.dev.Score", "edge.density.perft", "corridorwidth.ft", "corridormin.ft")
+  #   
+  #   #Create empty matrices to store suitability outputs
+  #   SI.instream <- c(); SI.fauna <- c(); SI.corridor <- c()
+  #   
+  #   #Fill site inputs with the user inputs
+  #   #site.instream: hyd.att, stripwidth.ft, flowpath.score, shading.ratio, cancov.score, canstr.score, and carbret.score (7 total)
+  #   site.instream <- c(input$hyd.att,input$stripwidth.ft,input$flowpath.score,input$shading.ratio,input$cancov.score,input$canstr.score,input$carbret.score)
+  #   site.instream <- c(input$hyd.att,input$stripwidth.ft,input$flowpath.score,input$shading.ratio,input$cancov.score,input$canstr.score,input$carbret.score)
+  #   #site.fauna: canstr.score, deadfall.score, snag.score, batcan.score, embed.score, detritus.score, herb.score, and inv.veg.score (8 total)
+  #   site.fauna <- c(input$canstr.score.fauna, input$deadfall.score, input$snag.score, input$batcan.score, input$embed.score, input$detritus.score, input$herb.score, input$inv.veg.score)
+  #   site.fauna <- c(input$canstr.score.fauna, input$deadfall.score, input$snag.score, input$batcan.score, input$embed.score, input$detritus.score, input$herb.score, input$inv.veg.score)
+  #   #site.corridor: buffer.dev.Score, edge.density.perft, corridorwidth.ft, and corridormin.ft (4 total)
+  #   site.corridor<- c(input$buffer.dev.Score, input$edge.density.perft, input$corridorwidth.ft, input$corridormin.ft)
+  #   site.corridor<- c(input$buffer.dev.Score, input$edge.density.perft, input$corridorwidth.ft, input$corridormin.ft)
+  #   #site.area: area.input (1 total)
+  #   site.area <- c(input$area.input)
+  #   site.area <- c(input$area.input)
+  #   
+  #   #Calculate suitability indices for each input variable and module using SIcalc( ) from the ecorest package
+  #   SI.instream <- SIcalc(data.frame(lapply(SMURF_instream,as.numeric)), site.instream)
+  #   SI.fauna <- SIcalc(data.frame(lapply(SMURF_fauna,as.numeric)), site.fauna)
+  #   SI.corridor <- SIcalc(data.frame(lapply(SMURF_corridor,as.numeric)), site.corridor)
+  #   
+  #   #Create empty data frame to store outputs (Instream SI, Habitat SI, Corridor SI, HSI, Area, Habitat Units)
+  #   SMURF.out <- as.data.frame(matrix(NA, nrow = 1, ncol = 6))
+  #   colnames(SMURF.out) <- c("Instream.SI", "Fauna.SI", "Corridor.SI", "HSI", "Area", "HU")
+  #   #If any input is NA, return NA
+  #   if (sum(is.na(c(site.instream,site.fauna,site.corridor))) > 0){
+  #     SMURF.out$Instream.SI <- NA
+  #     SMURF.out$Fauna.SI <- NA
+  #     SMURF.out$Corridor.SI <- NA
+  #     SMURF.out$HSI <- NA
+  #     SMURF.out$Area <- NA
+  #     SMURF.out$HU <- NA
+  #   }
+  #   
+  #   #Else compute all other outputs
+  #   else{
+  #     #Compute module-specific habitat suitability indices using HSIarimean( ) from the ecorest package - ARITHMETIC MEAN
+  #     SMURF.out$Instream.SI <- round(HSIarimean(SI.instream), digits=3)
+  #     SMURF.out$Fauna.SI <- round(HSIarimean(SI.fauna), digits=3)
+  #     SMURF.out$Corridor.SI <- round(HSIarimean(SI.corridor), digits=3)
+  #     
+  #     #Compute overarching habitat suitability index and habitat units
+  #     SMURF.out$HSI <- round((SMURF.out$Instream.SI * SMURF.out$Fauna.SI * SMURF.out$Corridor.SI) ^ (1/3), digits=3)
+  #     SMURF.out$Area <- round(site.area, digits=3)
+  #     SMURF.out$HU <- round(SMURF.out$HSI * SMURF.out$Area, digits=3)
+  #     colnames(SMURF.out) <- c("Instream Suitability", "Fauna Suitability", "Corridor Suitability", "Overall Suitability", "Area", "Habitat Units")
+  #   }
+  #   #Send output from function
+  #   return(SMURF.out)
+  # })
+  
+  # output$SMURF<-renderDataTable({
+  #   datatable(
+  #     t(SMURF()),
+  #     colnames=NULL,
+  #     options=list(paging=FALSE,
+  #                  searching=FALSE,
+  #                  paging=FALSE)
+  #   )
+  # })
+  
+  # SMURF_single <- reactive({
+  #   load('SMURF_instream.rda')
+  #   load('SMURF_fauna.rda')
+  #   load('SMURF_corridor.rda')
+  #   instream.names <- c("hyd.att", "stripwidth.ft", "flowpath.score", "shading.ratio", 
+  #                       "cancov.score", "canstr.score", "carbret.score")
+  #   
+  #   fauna.names <- c("canstr.score", "deadfall.score", "snag.score", "batcan.score",
+  #                    "embed.score", "detritus.score", "herb.score", "inv.veg.score")
+  #   
+  #   corridor.names <- c("buffer.dev.Score", "edge.density.perft", "corridorwidth.ft", "corridormin.ft")
+  #   
+  #   #Create empty matrices to store suitability outputs
+  #   SI.instream <- c(); SI.fauna <- c(); SI.corridor <- c()
+  #   
+  #   #Fill site inputs with the user inputs
+  #   #site.instream: hyd.att, stripwidth.ft, flowpath.score, shading.ratio, cancov.score, canstr.score, and carbret.score (7 total)
+  #   site.instream <- c(input$hyd.att,input$stripwidth.ft,input$flowpath.score,input$shading.ratio,input$cancov.score,input$canstr.score,input$carbret.score)
+  #   #site.fauna: canstr.score, deadfall.score, snag.score, batcan.score, embed.score, detritus.score, herb.score, and inv.veg.score (8 total)
+  #   site.fauna <- c(input$canstr.score.fauna, input$deadfall.score, input$snag.score, input$batcan.score, input$embed.score, input$detritus.score, input$herb.score, input$inv.veg.score)
+  #   #site.corridor: buffer.dev.Score, edge.density.perft, corridorwidth.ft, and corridormin.ft (4 total)
+  #   site.corridor<- c(input$buffer.dev.Score, input$edge.density.perft, input$corridorwidth.ft, input$corridormin.ft)
+  #   #site.area: area.input (1 total)
+  #   site.area <- c(input$area.input)
+  #   
+  #   #Calculate suitability indices for each input variable and module using SIcalc( ) from the ecorest package
+  #   SI.instream <- SIcalc(data.frame(lapply(SMURF_instream,as.numeric)), site.instream)
+  #   SI.fauna <- SIcalc(data.frame(lapply(SMURF_fauna,as.numeric)), site.fauna)
+  #   SI.corridor <- SIcalc(data.frame(lapply(SMURF_corridor,as.numeric)), site.corridor)
+  #   
+  #   #Create empty data frame to store outputs (Instream SI, Habitat SI, Corridor SI, HSI, Area, Habitat Units)
+  #   SMURF.out <- as.data.frame(matrix(NA, nrow = 1, ncol = 6))
+  #   colnames(SMURF.out) <- c("Instream.SI", "Fauna.SI", "Corridor.SI", "HSI", "Area", "HU")
+  #   #If any input is NA, return NA
+  #   if (sum(is.na(c(site.instream,site.fauna,site.corridor))) > 0){
+  #     SMURF.out$Instream.SI <- NA
+  #     SMURF.out$Fauna.SI <- NA
+  #     SMURF.out$Corridor.SI <- NA
+  #     SMURF.out$HSI <- NA
+  #     SMURF.out$Area <- NA
+  #     SMURF.out$HU <- NA
+  #   }
+  #   
+  #   #Else compute all other outputs
+  #   else{
+  #     #Compute module-specific habitat suitability indices using HSIarimean( ) from the ecorest package - ARITHMETIC MEAN
+  #     SMURF.out$Instream.SI <- round(HSIarimean(SI.instream), digits=3)
+  #     SMURF.out$Fauna.SI <- round(HSIarimean(SI.fauna), digits=3)
+  #     SMURF.out$Corridor.SI <- round(HSIarimean(SI.corridor), digits=3)
+  #     
+  #     #Compute overarching habitat suitability index and habitat units
+  #     SMURF.out$HSI <- round((SMURF.out$Instream.SI * SMURF.out$Fauna.SI * SMURF.out$Corridor.SI) ^ (1/3), digits=3)
+  #     SMURF.out$Area <- round(site.area, digits=3)
+  #     SMURF.out$HU <- round(SMURF.out$HSI * SMURF.out$Area, digits=3)
+  #     colnames(SMURF.out) <- c("Instream Suitability", "Fauna Suitability", "Corridor Suitability", "Overall Suitability", "Area", "Habitat Units")
+  #   }
+  #   #Send output from function
+  #   return(SMURF.out)
+  # })
+  # 
+  # output$SMURF_single<-renderDataTable({
+  #   datatable(
+  #     t(SMURF_single()),
+  #     colnames=NULL,
+  #     options=list(paging=FALSE,
+  #                  searching=FALSE,
+  #                  paging=FALSE)
+  #   )
+  # })
   
   SMURF_multi<- reactive({
     load('SMURF_instream.rda')
@@ -2613,6 +2820,21 @@ server <- function(input, output, session) { #this function constantly refreshes
                    searching=FALSE,
                    paging=FALSE)
     )
+  })
+  
+  load_smurf_instream <- reactive({ 
+     data <- load('SMURF_instream.rda')
+    return(data)
+  })
+  
+  load_smurf_fauna <- reactive({ 
+    data <- load('SMURF_fauna.rda')
+    return(data)
+  })
+  
+  load_smurf_corridor <- reactive({ 
+    data <- load('SMURF_corridor.rda')
+    return(data)
   })
   
   model_content <- reactive({
