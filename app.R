@@ -210,6 +210,7 @@ ui <-dashboardPage(   #open user-interface
               title="Bosque",
               solidHeader = T,
               status = "primary",
+              helpText("For the following, please enter the SI value's associated with the respective inputs"),
               helpText("Assessments for Cover Types 1-5 (Forest and Shrubs) should include the following variables:"),
               helpText("DEPTHGW: Depth to Groundwater (ft)"),
               helpText("WETTEDAREA: Percent of Polygon that is Wet (%)"),
@@ -262,6 +263,7 @@ ui <-dashboardPage(   #open user-interface
               title="Cottonwood",
               solidHeader = T,
               status = "primary",
+              helpText("For the following, please enter the SI value's associated with the respective inputs"),
               helpText("LCPI: Land Capability Potential Index"),
               helpText("DEPTHGW: Depth to Groundwater (m)"),
               helpText("RICHNATIVE: Native Species Richness (Count)"),
@@ -550,9 +552,11 @@ server <- function(input, output, session) { #this function constantly refreshes
              !is.na(Bosque[20,1]) && !is.na(Bosque[21,1]) && 
              !is.na(Bosque[22,1]) && !is.na(Bosque[23,1]) && 
              !is.na(Bosque[24,1]) && !is.na(Bosque[25,1])){
-            HYDRO <- ((Bosque[4,1]+Bosque[5,1])**0.5+Bosque[2,1]+Bosque[3,1])/3
-            BIOTA <- ((Bosque[7,1]*Bosque[22,1])+(Bosque[16,1]*Bosque[19,1])+(Bosque[17,1]*Bosque[20,1])+(Bosque[18,1]*Bosque[21,1]))/4
-            SPATIAL <- (Bosque[23,1]+Bosque[24,1]+Bosque[25,1])/3
+            # HYDRO <- (((Bosque[4,1])*(Bosque[5,1]))**0.5+Bosque[2,1]*0.01+Bosque[3,1]*0.01)/3
+            HYDRO <- (((Bosque[4,1])*(Bosque[5,1]))**0.5+Bosque[2,1]+Bosque[3,1])/3
+            # BIOTA <- (((Bosque[7,1]*0.01)*(Bosque[22,1]))+((Bosque[16,1]*0.01)*(Bosque[19,1]*0.01))+((Bosque[17,1]*0.01)*(Bosque[20,1]*0.01))+((Bosque[18,1]*0.01)*(Bosque[21,1]*0.01)))/4
+            BIOTA <- (((Bosque[7,1])*(Bosque[22,1]))+((Bosque[16,1])*(Bosque[19,1]))+((Bosque[17,1])*(Bosque[20,1]))+((Bosque[18,1])*(Bosque[21,1])))/4
+            SPATIAL <- (2*(((Bosque[23,1])*(Bosque[25,1]))**0.5)+(Bosque[24,1]))/3
             Bosque[26,1] <- (HYDRO+BIOTA+SPATIAL)/3
           }
         }else if(Bosque[1,1]==1 || Bosque[1,1]==2 || Bosque[1,1]==3 || Bosque[1,1]==4 || Bosque[1,1]==5){
@@ -565,9 +569,16 @@ server <- function(input, output, session) { #this function constantly refreshes
              !is.na(Bosque[14,1]) && !is.na(Bosque[15,1]) && 
              !is.na(Bosque[23,1]) &&
              !is.na(Bosque[24,1]) && !is.na(Bosque[25,1])){
-            HYDRO <- ((Bosque[4,1]+Bosque[5,1])**0.5+Bosque[2,1]+Bosque[3,1])/3
-            BIOTA <- (3*(((((Bosque[6,1]*Bosque[9,1]*Bosque[10,1])**0.5+Bosque[7,1])/2)*Bosque[12,1])**0.5)+(Bosque[8,1]*Bosque[11,1])+Bosque[15,1]+(Bosque[13,1]*Bosque[14,1])**0.5)/6
-            SPATIAL <- (Bosque[23,1]+Bosque[24,1]+Bosque[25,1])/3
+            # HYDRO <- (((Bosque[4,1])*(Bosque[5,1]))**0.5+Bosque[2,1]*0.01+Bosque[3,1]*0.01)/3
+            HYDRO <- (((Bosque[4,1])*(Bosque[5,1]))**0.5+Bosque[2,1]+Bosque[3,1])/3
+            # BIOTA <- (3*((((((Bosque[6,1]*0.01)*(Bosque[10,1]*0.01)*Bosque[9,1])**0.5+Bosque[7,1])/2)*Bosque[12,1])**0.5)+((Bosque[8,1]*0.01)*(Bosque[11,1]*0.01))+Bosque[15,1]+((Bosque[13,1]*0.01)*Bosque[14,1])**0.5)/6
+            BIOTA <- (3*((((((Bosque[6,1])*(Bosque[10,1])*Bosque[9,1])**0.5+Bosque[7,1])/2)*Bosque[12,1])**0.5)+((Bosque[8,1])*(Bosque[11,1]))+Bosque[15,1]+((Bosque[13,1])*Bosque[14,1])**0.5)/6
+            # BIOTA <- (3*((((((Bosque[6,1]*0.01)*(Bosque[10,1]*0.01)*Bosque[9,1]*0.01)**0.5+Bosque[7,1]*0.01)/2)*Bosque[12,1]*0.01)**0.5)+((Bosque[8,1]*0.01)*(Bosque[11,1]*0.01))+Bosque[15,1]*0.01+((Bosque[13,1]*0.01)*Bosque[14,1]*0.01)**0.5)/6
+            SPATIAL <- (2*(((Bosque[23,1])*(Bosque[25,1]))**0.5)+(Bosque[24,1]))/3
+            # SPATIAL <- (2*(((Bosque[23,1]*0.01)*(Bosque[25,1])*0.01)**0.5)+(Bosque[24,1])*0.01)/3
+            # View(HYDRO)
+            # View(BIOTA)
+            # View(SPATIAL)
             Bosque[26,1] <- (HYDRO+BIOTA+SPATIAL)/3
           }
         }
@@ -626,7 +637,7 @@ server <- function(input, output, session) { #this function constantly refreshes
       Chatfield <- hot_to_r(input$Chatfield)
       filled <- 0
       for(i in 1:32){
-        if(!is.na(Chatfield[i,1]) && is.numeric(Chatfield[i,1])){
+        if(!is.na(Chatfield[i,1]) && is.numeric(Chatfield[i,1]) && Chatfield[i,1]>=50 && Chatfield[i,1]<=100){
           filled <- filled + 1
         }
         if(i==32 && filled==32){
@@ -645,7 +656,7 @@ server <- function(input, output, session) { #this function constantly refreshes
           Chatfield[34,1] <- ((V1*0.15)+(V2*0.15)+(V3*0)+(V4*0.1)+(V5*0.15)+(V6*0.1)+(V7*0.1)+(V8*0.15)+(V9*0.1)+(V10*0))/50-1
           Chatfield[35,1] <- ((V1*0.15)+(V2*0.05)+(V3*0.25)+(V4*0.1)+(V5*0.1)+(V6*0.05)+(V7*0)+(V8*0.05)+(V9*0.05)+(V10*0.2))/50-1
           Chatfield[36,1] <- ((V1*0.2)+(V2*0)+(V3*0.15)+(V4*0.1)+(V5*0.1)+(V6*0.05)+(V7*0)+(V8*0.1)+(V9*0.1)+(V10*0.2))/50-1
-          Chatfield[37,1] <- sum(Chatfield[32:36,1])/4
+          Chatfield[37,1] <- sum(Chatfield[33:36,1])/4
         }
       }
     }
@@ -825,25 +836,25 @@ server <- function(input, output, session) { #this function constantly refreshes
             if(is.na(Resaca_single_species[i,k])){
               next
             }
-            if(Resaca_single_species[i,1] < resaca_model[i,j]){
-              Resaca_single_species[i,k+2] <- Resaca_single_species[i,1] * resaca_model[i,j+1]
-            }
-            else if(Resaca_single_species[i,1] >= resaca_model[i,j+1] && Resaca_single_species[i,1] <= resaca_model[i,j+2]){
-              Resaca_single_species[i,k+2] <- 1
-            }
-            else if(Resaca_single_species[i,1] > resaca_model[i,j+4] && Resaca_single_species[i,1] <= resaca_model[i,j+5]){
-              Resaca_single_species[i,k+2] <- Resaca_single_species[i,1] * resaca_model[i,j+7] + resaca_model[i,j+8]
-            }
-            else{
-              Resaca_single_species[i,k+2] <- 0
-            }
+            # if(Resaca_single_species[i,1] < resaca_model[i,j]){
+            #   Resaca_single_species[i,k+2] <- Resaca_single_species[i,1] * resaca_model[i,j+1]
+            # }
+            # else if(Resaca_single_species[i,1] >= resaca_model[i,j+1] && Resaca_single_species[i,1] <= resaca_model[i,j+2]){
+            #   Resaca_single_species[i,k+2] <- 1
+            # }
+            # else if(Resaca_single_species[i,1] > resaca_model[i,j+4] && Resaca_single_species[i,1] <= resaca_model[i,j+5]){
+            #   Resaca_single_species[i,k+2] <- Resaca_single_species[i,1] * resaca_model[i,j+7] + resaca_model[i,j+8]
+            # }
+            # else{
+            #   Resaca_single_species[i,k+2] <- 0
+            # }
           }
           else{
             next
           }
         }
         if(Resaca_single_metric[1,3]=="Ebony/Snake-eyes Shrubland"){
-          if(sum(Resaca_single_species[,15],na.rm=TRUE)<20 && sum(Resaca_single_species[,15],na.rm=TRUE)>0){
+          if(sum(Resaca_single_species[,15],na.rm=TRUE)<=20 && sum(Resaca_single_species[,15],na.rm=TRUE)>0){
             Resaca_single_metric[2,4] <- sum(Resaca_single_species[,14],na.rm=TRUE)/20
             Resaca_single_metric[2,5] <- sum(Resaca_single_species[,15],na.rm=TRUE)/20
           }
@@ -851,38 +862,38 @@ server <- function(input, output, session) { #this function constantly refreshes
             Resaca_single_metric[2,4] <- sum(Resaca_single_species[,14],na.rm=TRUE)/sum(Resaca_single_species[,15],na.rm=TRUE)
             Resaca_single_metric[2,5] <- 1
           }
-          else{
-            Resaca_single_metric[2,4] <- 0
-            Resaca_single_metric[2,5] <- 0
-          }
+          # else{
+          #   Resaca_single_metric[2,4] <- 0
+          #   Resaca_single_metric[2,5] <- 0
+          # }
         }
         else if(Resaca_single_metric[1,3]=="Subtropical Texas Palmetto Woodland"){
-          if(sum(Resaca_single_species[,11],na.rm=TRUE)<18 && sum(Resaca_single_species[,11],na.rm=TRUE)>0){
+          if(sum(Resaca_single_species[,11],na.rm=TRUE)<=18 && sum(Resaca_single_species[,11],na.rm=TRUE)>0){
             Resaca_single_metric[2,4] <- sum(Resaca_single_species[,10],na.rm=TRUE)/18
             Resaca_single_metric[2,5] <- sum(Resaca_single_species[,11],na.rm=TRUE)/18
           }
-          else if(sum(Resaca_single_species[,11],na.rm=TRUE)>20){
+          else if(sum(Resaca_single_species[,11],na.rm=TRUE)>18){
             Resaca_single_metric[2,4] <- sum(Resaca_single_species[,10],na.rm=TRUE)/sum(Resaca_single_species[,11],na.rm=TRUE)
             Resaca_single_metric[2,5] <- 1
           }
-          else{
-            Resaca_single_metric[2,4] <- 0
-            Resaca_single_metric[2,5] <- 0
-          }
+          # else{
+          #   Resaca_single_metric[2,4] <- 0
+          #   Resaca_single_metric[2,5] <- 0
+          # }
         }
         else if(Resaca_single_metric[1,3]=="Texas Ebony Resaca Forest"){
-          if(sum(Resaca_single_species[,7],na.rm=TRUE)<24 && sum(Resaca_single_species[,7],na.rm=TRUE)>0){
+          if(sum(Resaca_single_species[,7],na.rm=TRUE)<=24 && sum(Resaca_single_species[,7],na.rm=TRUE)>0){
             Resaca_single_metric[2,4] <- sum(Resaca_single_species[,6],na.rm=TRUE)/24
             Resaca_single_metric[2,5] <- sum(Resaca_single_species[,7],na.rm=TRUE)/24
           }
-          else if(sum(Resaca_single_species[,7],na.rm=TRUE)>20){
+          else if(sum(Resaca_single_species[,7],na.rm=TRUE)>24){
             Resaca_single_metric[2,4] <- sum(Resaca_single_species[,6],na.rm=TRUE)/sum(Resaca_single_species[,7],na.rm=TRUE)
             Resaca_single_metric[2,5] <- 1
           }
-          else{
-            Resaca_single_metric[2,4] <- 0
-            Resaca_single_metric[2,5] <- 0
-          }
+          # else{
+          #   Resaca_single_metric[2,4] <- 0
+          #   Resaca_single_metric[2,5] <- 0
+          # }
         }
       }
       if(!is.na(Resaca_single_metric[1,6])){
@@ -954,7 +965,7 @@ server <- function(input, output, session) { #this function constantly refreshes
               if(!is.na(Skokomish_input[i,1]) && !is.na(Skokomish[1,i]) && !is.na(Skokomish[2,i]) 
                  && !is.na(Skokomish[3,i]) && !is.na(Skokomish[4,i]) && !is.na(Skokomish[5,i]) && !is.na(Skokomish[6,i])){
                 if(Skokomish_input[i,1]=="Channel Capacity and In-Channel Habitat"){
-                  Skokomish[7,i] <- (Skokomish[2,i]+Skokomish[5,i]+Skokomish[6,i])/3
+                  Skokomish[7,i] <- (Skokomish[2,i]+Skokomish[3,i]+Skokomish[6,i])/3
                 }
                 else if(Skokomish_input[i,1]=="In-Channel Habitat"){
                   Skokomish[7,i] <- (Skokomish[2,i]+Skokomish[3,i])/2
@@ -1094,10 +1105,10 @@ server <- function(input, output, session) { #this function constantly refreshes
                 else if(as.numeric(LowerWill[1,1])>=25 && as.numeric(LowerWill[1,1])<50){
                   LowerWill[1,2] <- 0.5 + ((as.numeric(LowerWill[1,1])-25)/25)*(1-0.5)
                 }
-                else if(as.numeric(LowerWill[1,1])>50 && as.numeric(LowerWill[1,1])<75){
+                else if(as.numeric(LowerWill[1,1])>=50 && as.numeric(LowerWill[1,1])<75){
                   LowerWill[1,2] <- 1 - ((as.numeric(LowerWill[1,1])-50)/25)*(1-0.8)
                 }
-                else if(as.numeric(LowerWill[1,1])>75 && as.numeric(LowerWill[1,1])<100){
+                else if(as.numeric(LowerWill[1,1])>=75 && as.numeric(LowerWill[1,1])<100){
                   LowerWill[1,2] <- 0.8 - ((as.numeric(LowerWill[1,1])-75)/25)*(0.8-0.6)
                 }
                 else if(as.numeric(LowerWill[1,1])>=100){
@@ -1168,6 +1179,7 @@ server <- function(input, output, session) { #this function constantly refreshes
               }
               if(!is.na(LowerWill[5,2]) && !is.na(LowerWill[4,2]) && !is.na(LowerWill[3,2]) && !is.na(LowerWill[2,2]) && !is.na(LowerWill[1,2])){
                 LowerWill[1,3] <- (LowerWill[1,2] + LowerWill[2,2] + LowerWill[3,2] + LowerWill[4,2] + LowerWill[5,2])/5
+                # LowerWill[1,3] <- (((LowerWill[1,2] * LowerWill[2,2])**(1/2) * LowerWill[5,2])**(1/2) + ((LowerWill[3,2] * LowerWill[4,2])**(1/2) * LowerWill[5,2])**(1/2))/2
                 LowerWill[1,4] <- LowerWill[1,3] * LowerWill_input[1,2]
               }
             }
@@ -2313,6 +2325,24 @@ server <- function(input, output, session) { #this function constantly refreshes
         # hot_col(col="TESES SSI", readOnly = TRUE) %>%
         # hot_col(col="TESES Rich", readOnly = TRUE) %>%
           hot_col(col="% Composition", renderer = "
+      function(instance, td, row, col, prop, value, cellProperties){
+        Handsontable.renderers.TextRenderer.apply(this, arguments);
+          td.style.background = 'yellow'
+        return td;
+      }") %>%
+        hot_col(col="TERF SSI", renderer = "
+      function(instance, td, row, col, prop, value, cellProperties){
+        Handsontable.renderers.TextRenderer.apply(this, arguments);
+          td.style.background = 'yellow'
+        return td;
+      }") %>%
+        hot_col(col="STPW SSI", renderer = "
+      function(instance, td, row, col, prop, value, cellProperties){
+        Handsontable.renderers.TextRenderer.apply(this, arguments);
+          td.style.background = 'yellow'
+        return td;
+      }") %>%
+        hot_col(col="TESES SSI", renderer = "
       function(instance, td, row, col, prop, value, cellProperties){
         Handsontable.renderers.TextRenderer.apply(this, arguments);
           td.style.background = 'yellow'
