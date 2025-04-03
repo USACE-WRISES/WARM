@@ -28,7 +28,7 @@ Development efforts of WARM have been outlined in documents including a paper fo
 Contributors: Colton Shaw (colton.k.shaw@gmail.com), Samantha Wiest (samantha.r.wiest@erdc.dren.mil), Kyle McKay (Kyle.McKay@usace.army.mil)
 
 <br />
-Release Date: 4/3/2025
+Release Date: 3/6/2023
 <br />
 Version: 1.2.2
 <br />
