@@ -130,7 +130,7 @@ ui <-dashboardPage(   #open user-interface
       tabItem(tabName="abt", # tab that links to documentation
               title = "About",
               fluidPage(
-                tags$iframe(src = './about.html',
+                tags$iframe(src = './about1.html',
                             width = '100%', height = '800px',
                             frameborder = 0, scrolling = 'auto'
                 )
@@ -2382,9 +2382,9 @@ server <- function(input, output, session) { #this function constantly refreshes
     DF <- values[["Skokomish"]]
     if (!is.null(DF)){
       rhandsontable(DF, useTypes = TRUE, 
-                    rowHeaders = c("Affected Acres", "V1 - Woody",
-                                   "V2 - Pools", "V3 - Connectivity",
-                                   "V4 - Riparian Cover", "V5 - Capacity",
+                    rowHeaders = c("Affected Acres", "V1 - Pools",
+                                   "V2 - Wood", "V3 - Riparian Cover",
+                                   "V4 - Connectivity", "V5 - Capacity",
                                    "HQI", "HU"),
                     colHeaders = NULL,
                     rowHeaderWidth = 250,
