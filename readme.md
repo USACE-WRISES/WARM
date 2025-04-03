@@ -1,12 +1,8 @@
 
 # Web App for Riparian Models
 
-<img src="SmallStream2WestPoint.jpg" align="right" width=200/>
-
 The **Web App for Riparian Models**, or **WARM**, is a graphical user-interface that can be used to conduct riparian assessment calculations using select and existing riparian models. Users may interact with a menu which helps guide the user to aid in searching for a riparian model and their respective calculators. This web app evaluates riparian models using "Review of Riparian Models for Assessing Ecological Impacts and Benefits" (Wiest et al.,2003) by evaluating the existing riparian tools relative to model objectives, modeling approach, and input variables via user input. 
 
-<br />
-Development efforts of WARM have been outlined in documents including a paper for the ASCE Inspire conference (Shaw and Wiest 2023) and an app certification document (Shaw and Wiest In Review). Both documents can be found on the [Paper Link](https://erdc-library.erdc.dren.mil/items/e8922532-ce64-4016-9a0b-9b6aa5485aab). Information pertaining to the WRISES team and their ongoing work can be found on the [WRISES GitHub](https://github.com/USACE-WRISES/WARM).
 
 <br /><br />
 Contributors: Colton Shaw (colton.k.shaw@gmail.com), Samantha Wiest (samantha.r.wiest@erdc.dren.mil), Kyle McKay (Kyle.McKay@usace.army.mil)
