@@ -250,6 +250,7 @@ ui <-dashboardPage(   #open user-interface
               title="Chatfield",
               solidHeader = T,
               status = "primary",
+              helpText("Please choose a value between 50-100"),
               rHandsontableOutput("Chatfield")
       ),
       
