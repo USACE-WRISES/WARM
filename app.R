@@ -72,7 +72,8 @@ ui <-dashboardPage(   #open user-interface
     sidebarMenu(  #each menu tab
       menuItem("Home Page", icon=icon("star"), startExpanded=TRUE, #menu tab
                menuSubItem("Start", tabName="str"), #menu subtab
-               menuSubItem("About",tabName="abt") #menu subtab
+               menuSubItem("About",tabName="abt"), #menu subtab
+               menuSubItem("Model Description",tabName="mdsc") #menu subtab
       ),
       menuItem("Model Comparison", icon=icon("book"), startExpanded=TRUE, #menu tab
                menuSubItem("Criteria", tabName="Broad"), #menu subtab
@@ -131,6 +132,16 @@ ui <-dashboardPage(   #open user-interface
               title = "About",
               fluidPage(
                 tags$iframe(src = './about1.html',
+                            width = '100%', height = '800px',
+                            frameborder = 0, scrolling = 'auto'
+                )
+              )
+      ),
+      
+      tabItem(tabName="mdsc", # tab that links to documentation
+              title = "Model Description",
+              fluidPage(
+                tags$iframe(src = './models_with_citations.html',
                             width = '100%', height = '800px',
                             frameborder = 0, scrolling = 'auto'
                 )
